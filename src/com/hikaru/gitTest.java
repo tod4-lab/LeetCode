@@ -7,6 +7,6 @@ public class gitTest {
         System.out.println("Hello git2");
         System.out.println("Hello git2");
         System.out.println("Hello git3");
-        System.out.println("master commit");
+        System.out.println("hotfix git3");
     }
 }
