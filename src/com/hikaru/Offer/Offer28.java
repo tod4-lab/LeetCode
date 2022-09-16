@@ -16,33 +16,44 @@ public class Offer28 {
         }
     }
 
+
     public boolean isSymmetric(TreeNode root) {
-        Deque<TreeNode> deque = new ArrayDeque<>();
-        if (root != null) {
-            deque.add(root);
+        if(root == null) {
+            return true;
         }
-        while (!deque.isEmpty()) {
+        Queue<TreeNode> queue = new LinkedBlockingQueue<>();
+        queue.add(root);
+        int num = 1;
+        while(!queue.isEmpty()) {
             List<Integer> row = new ArrayList<>();
-            int sz = deque.size();
-            int count = sz;
-            while (sz-- > 0) {
-                TreeNode front = deque.poll();
-                row.add(front.val);
-                if (front.left != null) {
-                    deque.add(front.left);
+            int count = 0;
+            while(num-- > 0) {
+                TreeNode front = queue.poll();
+                if(front.left != null) {
+                    queue.add(front.left);
+                    count++;
+                    row.add(front.left.val);
                 } else {
                     row.add(null);
                 }
-                if (front.right != null) {
-                    deque.add(front.right);
+                if(front.right != null) {
+                    queue.add(front.right);
+                    count++;
+                    row.add(front.right.val);
                 } else {
                     row.add(null);
                 }
             }
-            for (int i = 0; i < count; i++) {
-                if ((row.get(i) == null && row.get(count- 1 - i) != null)
-                        || (row.get(i) != null && row.get(count - 1 - i) == null)
-                        || !row.get(i).equals(row.get(count - 1 - i))) {
+            num = count;
+            int length = row.size();
+            for(int i = 0; i < length / 2; i++) {
+                if(row.get(i) != null && row.get(length - 1 - i) != null) {
+                    if(!row.get(i).equals(row.get(length - 1 - i))) {
+                        return false;
+                    }
+                } else if(row.get(i) == null && row.get(length - 1 - i) == null) {
+
+                } else {
                     return false;
                 }
             }
@@ -63,8 +74,8 @@ public class Offer28 {
         left.left = t1;
         left.right = t2;
 
-        TreeNode t3 = new TreeNode(4);
-        TreeNode t4 = new TreeNode(3);
+        TreeNode t3 = new TreeNode(3);
+        TreeNode t4 = new TreeNode(4);
         right.left = t3;
         right.right = t4;
         System.out.println(isSymmetric(root));
